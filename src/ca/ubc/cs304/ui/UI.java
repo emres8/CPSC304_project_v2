@@ -237,19 +237,19 @@ public class UI extends JFrame implements ActionListener{
             deleteComboBox.removeItemAt(index);
         }
         if (e.getSource() == insertButton){
-            int reservationsID = Integer.valueOf(reservationID.getText());
+            int reservationsID = Integer.parseInt(reservationID.getText());
             reservationDate.setValue(new Date());
             String reservationsDate = String.valueOf(reservationDate.getText());
             checkInDate.setValue(new Date());
             String checkInsDate = String.valueOf(checkInDate.getText());
             checkOutDate.setValue(new Date());
             String checkOutsDate = String.valueOf(checkOutDate.getText());
-            int roomsNo = Integer.valueOf(roomNo.getText());
-            int hotelsID = Integer.valueOf(hotelID.getText());
-            int customersID = Integer.valueOf(customerID.getText());
-            int invoicesNo = Integer.valueOf(invoiceNo.getText());
-            int eventsID = Integer.valueOf(eventID.getText());
-            int facilitiesID = Integer.valueOf(facilityID.getText());
+            int roomsNo = Integer.parseInt(roomNo.getText());
+            int hotelsID = Integer.parseInt(hotelID.getText());
+            int customersID = Integer.parseInt(customerID.getText());
+            int invoicesNo = Integer.parseInt(invoiceNo.getText());
+            int eventsID = Integer.parseInt(eventID.getText());
+            int facilitiesID = Integer.parseInt(facilityID.getText());
             ReservationModel model = new ReservationModel(reservationsID,reservationsDate,checkInsDate,checkOutsDate,roomsNo,customersID,hotelsID,invoicesNo,eventsID,facilitiesID);
             delegate.insertReservation(model);
             insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
