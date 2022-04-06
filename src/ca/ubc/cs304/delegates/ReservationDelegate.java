@@ -23,6 +23,7 @@ public interface ReservationDelegate {
     public ArrayList<String> getReservationIdList();
     public ArrayList<String> getColumnList(String columnName);
 
+
     public void updateHotel(int id, String type, String name);
     public DefaultTableModel selectionInvoice(int value, String operator, String columnName);
 

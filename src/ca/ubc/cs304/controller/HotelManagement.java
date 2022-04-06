@@ -100,7 +100,7 @@ public class HotelManagement  implements LoginWindowDelegate, ReservationDelegat
         return dbHandler.getColumnList(columnName);
     }
 
-    @Override
+    //@Override
     public void showInvoiceTable(InvoiceModel[] models) {
         for (int i = 0; i < models.length; i++) {
             InvoiceModel model = models[i];

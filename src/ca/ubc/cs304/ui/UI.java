@@ -1,15 +1,17 @@
 package ca.ubc.cs304.ui;
 
-import javax.swing.*;
+import ca.ubc.cs304.delegates.ReservationDelegate;
+import ca.ubc.cs304.model.ReservationModel;
 
+import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
-
-import ca.ubc.cs304.delegates.ReservationDelegate;
+import java.util.Date;
 
 public class UI extends JFrame implements ActionListener{
     private JButton divisionButton;
@@ -67,16 +69,31 @@ public class UI extends JFrame implements ActionListener{
     private JComboBox selectionOperatorComboBox;
     private JTextField selectionValueTextField;
     private JTable selectionTable;
+    private JTable deleteReservationTable;
+    private JTextField reservationID;
+    private JTextField roomNo;
+    private JTextField customerID;
+    private JTextField hotelID;
+    private JTextField invoiceNo;
+    private JTextField eventID;
+    private JTextField facilityID;
+    private JTable insertReservationTable;
 
 
     private ReservationDelegate delegate = null;
+
+    DateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+    DateFormatter df = new DateFormatter(format);
+    private JFormattedTextField checkOutDate = new JFormattedTextField(df);
+    private JFormattedTextField checkInDate = new JFormattedTextField(df);
+    private JFormattedTextField reservationDate = new JFormattedTextField(df);
 
 
 
     public UI(ReservationDelegate delegate){
         this.delegate = delegate;
         setContentPane(panel1);
-        setTitle("CPSC 304 Project");
+        setTitle("Hotel Management Database");
         setSize(1000,700);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -164,10 +181,20 @@ public class UI extends JFrame implements ActionListener{
         selectionPane.setLayout(new BoxLayout(selectionPane, BoxLayout.PAGE_AXIS));
         selectionPane.add(new JScrollPane(selectionTable));
 
+        deleteReservationTable.setGridColor(Color.BLACK);
+        //deletePane.setLayout(new BoxLayout(deletePane,BoxLayout.PAGE_AXIS));
+        //deletePane.add(new JScrollPane(deleteReservationTable));
+
+        insertReservationTable.setGridColor(Color.BLACK);
+
+
+
 
 
         ArrayList<String> idList = delegate.getReservationIdList();
         idList.forEach((n) -> deleteComboBox.addItem(n));
+
+
 
         ArrayList<String> columnList = delegate.getColumnList("RESERVATION");
         columnList.forEach((n) -> projectionComboBox.addItem(n));
@@ -195,6 +222,8 @@ public class UI extends JFrame implements ActionListener{
         hotelServiceTable.setModel(delegate.getDefaultTable("SELECT * FROM","HOTELSERVICES"));
         roomTable.setModel(delegate.getDefaultTable("SELECT * FROM","ROOMS"));
         paymentTable.setModel(delegate.getDefaultTable("SELECT * FROM","PAYMENT"));
+        deleteReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
+        insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
     }
 
     @Override
@@ -204,7 +233,26 @@ public class UI extends JFrame implements ActionListener{
             int index = deleteComboBox.getSelectedIndex();
             delegate.deleteReservation(Integer.parseInt(resID));
             reservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
+            deleteReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
             deleteComboBox.removeItemAt(index);
+        }
+        if (e.getSource() == insertButton){
+            int reservationsID = Integer.valueOf(reservationID.getText());
+            reservationDate.setValue(new Date());
+            String reservationsDate = String.valueOf(reservationDate.getText());
+            checkInDate.setValue(new Date());
+            String checkInsDate = String.valueOf(checkInDate.getText());
+            checkOutDate.setValue(new Date());
+            String checkOutsDate = String.valueOf(checkOutDate.getText());
+            int roomsNo = Integer.valueOf(roomNo.getText());
+            int hotelsID = Integer.valueOf(hotelID.getText());
+            int customersID = Integer.valueOf(customerID.getText());
+            int invoicesNo = Integer.valueOf(invoiceNo.getText());
+            int eventsID = Integer.valueOf(eventID.getText());
+            int facilitiesID = Integer.valueOf(facilityID.getText());
+            ReservationModel model = new ReservationModel(reservationsID,reservationsDate,checkInsDate,checkOutsDate,roomsNo,customersID,hotelsID,invoicesNo,eventsID,facilitiesID);
+            delegate.insertReservation(model);
+            insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         }
         if(e.getSource() == updateHotelButton){
           //  delegate.updateHotel();
