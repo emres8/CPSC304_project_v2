@@ -1,17 +1,12 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.delegates.ReservationDelegate;
-import ca.ubc.cs304.model.ReservationModel;
 
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class UI extends JFrame implements ActionListener{
     private JButton divisionButton;
@@ -249,13 +244,13 @@ public class UI extends JFrame implements ActionListener{
 
             String checkOutsDate = String.valueOf(checkOutDate.getText());
             int roomsNo = Integer.parseInt(roomNo.getText());
-            int hotelsID = Integer.parseInt(hotelID.getText());
-            int customersID = Integer.parseInt(customerID.getText());
-            int invoicesNo = Integer.parseInt(invoiceNo.getText());
-            int eventsID = Integer.parseInt(eventID.getText());
-            int facilitiesID = Integer.parseInt(facilityID.getText());
-            ReservationModel model = new ReservationModel(reservationsID,reservationsDate,checkInsDate,checkOutsDate,roomsNo,customersID,hotelsID,invoicesNo,eventsID,facilitiesID);
-            delegate.insertReservation(model);
+            //int hotelsID = Integer.parseInt(hotelID.getText());
+            //int customersID = Integer.parseInt(customerID.getText());
+            //int invoicesNo = Integer.parseInt(invoiceNo.getText());
+            //int eventsID = Integer.parseInt(eventID.getText());
+            //int facilitiesID = Integer.parseInt(facilityID.getText());
+            //ReservationModel model = new ReservationModel(reservationsID,reservationsDate,checkInsDate,checkOutsDate,roomsNo,customersID,hotelsID,invoicesNo,eventsID,facilitiesID);
+           // delegate.insertReservation(model);
             insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         }
         if(e.getSource() == updateHotelButton){
