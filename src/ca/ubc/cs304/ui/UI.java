@@ -82,11 +82,11 @@ public class UI extends JFrame implements ActionListener{
 
     private ReservationDelegate delegate = null;
 
-    DateFormat format = new SimpleDateFormat("YYYY-MM-DD");
-    DateFormatter df = new DateFormatter(format);
-    private JFormattedTextField checkOutDate = new JFormattedTextField(df);
-    private JFormattedTextField checkInDate = new JFormattedTextField(df);
-    private JFormattedTextField reservationDate = new JFormattedTextField(df);
+
+
+    private JTextField checkOutDate;
+    private JTextField checkInDate;
+    private JTextField reservationDate;
 
 
 
@@ -238,11 +238,11 @@ public class UI extends JFrame implements ActionListener{
         }
         if (e.getSource() == insertButton){
             int reservationsID = Integer.parseInt(reservationID.getText());
-            reservationDate.setValue(new Date());
+
             String reservationsDate = String.valueOf(reservationDate.getText());
-            checkInDate.setValue(new Date());
+
             String checkInsDate = String.valueOf(checkInDate.getText());
-            checkOutDate.setValue(new Date());
+
             String checkOutsDate = String.valueOf(checkOutDate.getText());
             int roomsNo = Integer.parseInt(roomNo.getText());
             int hotelsID = Integer.parseInt(hotelID.getText());
