@@ -82,17 +82,12 @@ public class UI extends JFrame implements ActionListener{
 
     private ReservationDelegate delegate = null;
 
-    DateFormat format = new SimpleDateFormat("YYYY-MM-DD");
-    DateFormatter df = new DateFormatter(format);
-    private JFormattedTextField checkOutDate = new JFormattedTextField(df);
-    private JFormattedTextField checkInDate = new JFormattedTextField(df);
-    private JFormattedTextField reservationDate = new JFormattedTextField(df);
-    private JTable updateHotelTable;
-    private JTextField hotelid;
-    private JTextField newHotelName;
-    private JTextField hotelName;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
+
+
+    private JTextField checkOutDate;
+    private JTextField checkInDate;
+    private JTextField reservationDate;
+
 
 
     public UI(ReservationDelegate delegate){
@@ -191,7 +186,6 @@ public class UI extends JFrame implements ActionListener{
         //deletePane.add(new JScrollPane(deleteReservationTable));
 
         insertReservationTable.setGridColor(Color.BLACK);
-        updateHotelTable.setGridColor(Color.BLACK);
 
 
 
@@ -199,12 +193,6 @@ public class UI extends JFrame implements ActionListener{
 
         ArrayList<String> idList = delegate.getReservationIdList();
         idList.forEach((n) -> deleteComboBox.addItem(n));
-
-        ArrayList<String> hotelIDList = delegate.getIDListFrom("HOTEL");
-        hotelIDList.forEach((n) -> updateIDcomboBox.addItem(n));
-
-        ArrayList<String> reservationIDList = delegate.getIDListFrom("HOTEL");
-        hotelIDList.forEach((n) -> updateIDcomboBox.addItem(n));
 
 
 
@@ -236,7 +224,6 @@ public class UI extends JFrame implements ActionListener{
         paymentTable.setModel(delegate.getDefaultTable("SELECT * FROM","PAYMENT"));
         deleteReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
-        updateHotelTable.setModel(delegate.getDefaultTable("SELECT * FROM","HOTEL"));
     }
 
     @Override
@@ -248,33 +235,17 @@ public class UI extends JFrame implements ActionListener{
             reservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
             deleteReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
             deleteComboBox.removeItemAt(index);
-
         }
-//        if(e.getSource() == insertButton){
-//            int hotelID =  Integer.valueOf((String)insertHotelIdComboBox.getSelectedItem());
-//            int customerID =  Integer.valueOf((String) insertCustomerIdComboBox.getSelectedItem());
-//            int roomNo = Integer.valueOf((String) insertRoomNoComboBox.getSelectedItem());
-//            int facilityID = Integer.valueOf((String) insertFacilityIDComboBox.getSelectedItem());
-//            int eventID = Integer.valueOf((String) insertEventIdComboBox.getSelectedItem());
-//            int invoiceNumber =  Integer.valueOf((String) insertInvoiceNumberComboBox.getSelectedItem());
-//            int reservationID = Integer.valueOf(reservationIDTextField.getText());
-//            String reservationDate = String.valueOf(reservationDateTextField.getText());
-//            String checkInDate = String.valueOf(checkInDateTextField.getText());
-//            String checkOutDate = String.valueOf(checkOutDateTextField.getText());
-//            ReservationModel model = new ReservationModel(reservationID,reservationDate,checkInDate,checkOutDate,roomNo,customerID,hotelID,invoiceNumber,facilityID,eventID);
-//            delegate.insertReservation(model);
-//            reservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
-//            deleteComboBox.addItem(reservationID);
-//
-//
-//        }
         if (e.getSource() == insertButton){
-            int hotelsID = Integer.valueOf((String) hotelID.getSelectedItem());
-            int reservationsID = Integer.valueOf(reservationID.getText());
+            int reservationsID = Integer.parseInt(reservationID.getText());
+
             String reservationsDate = String.valueOf(reservationDate.getText());
+
             String checkInsDate = String.valueOf(checkInDate.getText());
+
             String checkOutsDate = String.valueOf(checkOutDate.getText());
             int roomsNo = Integer.parseInt(roomNo.getText());
+            int hotelsID = Integer.parseInt(hotelID.getText());
             int customersID = Integer.parseInt(customerID.getText());
             int invoicesNo = Integer.parseInt(invoiceNo.getText());
             int eventsID = Integer.parseInt(eventID.getText());
@@ -282,15 +253,9 @@ public class UI extends JFrame implements ActionListener{
             ReservationModel model = new ReservationModel(reservationsID,reservationsDate,checkInsDate,checkOutsDate,roomsNo,customersID,hotelsID,invoicesNo,eventsID,facilitiesID);
             delegate.insertReservation(model);
             insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
-            reservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         }
         if(e.getSource() == updateHotelButton){
-          int ID = Integer.valueOf(hotelid.getText());
-          String name = String.valueOf(hotelName.getText()) ;
-          String newName = String.valueOf(newHotelName.getText());
-          delegate.updateHotel(ID,name,newName);
-          updateHotelTable.setModel(delegate.getDefaultTable("SELECT * FROM", "HOTEL"));
-          hotelTable.setModel(delegate.getDefaultTable("SELECT * FROM", "HOTEL"));
+          //  delegate.updateHotel();
         }
         if(e.getSource() == joinButton){
             joinTable.setModel(delegate.joinMailsofCustomersMoreThanOneWeek());
