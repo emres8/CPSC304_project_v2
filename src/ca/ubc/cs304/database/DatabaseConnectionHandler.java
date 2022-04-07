@@ -159,6 +159,32 @@ public class DatabaseConnectionHandler {
 			rollbackConnection();
 		}
 	}
+	public ArrayList<String> getIDListFrom(String tableName) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+			String query = "SELECT * FROM " + tableName;
+			PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String idColumnName = tableName + "ID";
+				if(tableName.equalsIgnoreCase("rooms")){
+					idColumnName = "ROOMNO";
+				}
+				if(tableName.equalsIgnoreCase("invoice")){
+					idColumnName = tableName + "NUMBER";
+				}
+				if(tableName.equalsIgnoreCase("events")){
+					idColumnName = "EVENTID";
+				}
+				result.add(rs.getString(idColumnName));
+			}
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+		return result;
+	}
 
 	public ArrayList<String> getReservationIdList() {
 		ArrayList<String> result = new ArrayList<String>();

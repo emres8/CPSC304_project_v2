@@ -112,6 +112,11 @@ public class HotelManagement  implements LoginWindowDelegate, ReservationDelegat
     }
 
     @Override
+    public ArrayList<String> getIDListFrom(String tableName) {
+        return dbHandler.getIDListFrom(tableName);
+    }
+
+    @Override
     public DefaultTableModel selectionInvoice(int value, String operator, String columnName) {
         return dbHandler.selectionInvoice(value, operator, columnName);
     }

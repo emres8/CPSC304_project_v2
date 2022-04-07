@@ -22,6 +22,7 @@ public interface ReservationDelegate {
 
     public ArrayList<String> getReservationIdList();
     public ArrayList<String> getColumnList(String columnName);
+    public ArrayList<String> getIDListFrom(String tableName);
 
 
     public void updateHotel(int id, String type, String name);

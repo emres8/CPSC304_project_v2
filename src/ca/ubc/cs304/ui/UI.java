@@ -91,6 +91,8 @@ public class UI extends JFrame implements ActionListener{
     private JTextField hotelid;
     private JTextField newHotelName;
     private JTextField hotelName;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
 
 
     public UI(ReservationDelegate delegate){
@@ -198,6 +200,12 @@ public class UI extends JFrame implements ActionListener{
         ArrayList<String> idList = delegate.getReservationIdList();
         idList.forEach((n) -> deleteComboBox.addItem(n));
 
+        ArrayList<String> hotelIDList = delegate.getIDListFrom("HOTEL");
+        hotelIDList.forEach((n) -> updateIDcomboBox.addItem(n));
+
+        ArrayList<String> reservationIDList = delegate.getIDListFrom("HOTEL");
+        hotelIDList.forEach((n) -> updateIDcomboBox.addItem(n));
+
 
 
         ArrayList<String> columnList = delegate.getColumnList("RESERVATION");
@@ -242,16 +250,31 @@ public class UI extends JFrame implements ActionListener{
             deleteComboBox.removeItemAt(index);
 
         }
+//        if(e.getSource() == insertButton){
+//            int hotelID =  Integer.valueOf((String)insertHotelIdComboBox.getSelectedItem());
+//            int customerID =  Integer.valueOf((String) insertCustomerIdComboBox.getSelectedItem());
+//            int roomNo = Integer.valueOf((String) insertRoomNoComboBox.getSelectedItem());
+//            int facilityID = Integer.valueOf((String) insertFacilityIDComboBox.getSelectedItem());
+//            int eventID = Integer.valueOf((String) insertEventIdComboBox.getSelectedItem());
+//            int invoiceNumber =  Integer.valueOf((String) insertInvoiceNumberComboBox.getSelectedItem());
+//            int reservationID = Integer.valueOf(reservationIDTextField.getText());
+//            String reservationDate = String.valueOf(reservationDateTextField.getText());
+//            String checkInDate = String.valueOf(checkInDateTextField.getText());
+//            String checkOutDate = String.valueOf(checkOutDateTextField.getText());
+//            ReservationModel model = new ReservationModel(reservationID,reservationDate,checkInDate,checkOutDate,roomNo,customerID,hotelID,invoiceNumber,facilityID,eventID);
+//            delegate.insertReservation(model);
+//            reservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
+//            deleteComboBox.addItem(reservationID);
+//
+//
+//        }
         if (e.getSource() == insertButton){
-            int reservationsID = Integer.parseInt(reservationID.getText());
-            reservationDate.setValue(new Date());
+            int hotelsID = Integer.valueOf((String) hotelID.getSelectedItem());
+            int reservationsID = Integer.valueOf(reservationID.getText());
             String reservationsDate = String.valueOf(reservationDate.getText());
-            checkInDate.setValue(new Date());
             String checkInsDate = String.valueOf(checkInDate.getText());
-            checkOutDate.setValue(new Date());
             String checkOutsDate = String.valueOf(checkOutDate.getText());
             int roomsNo = Integer.parseInt(roomNo.getText());
-            int hotelsID = Integer.parseInt(hotelID.getText());
             int customersID = Integer.parseInt(customerID.getText());
             int invoicesNo = Integer.parseInt(invoiceNo.getText());
             int eventsID = Integer.parseInt(eventID.getText());
