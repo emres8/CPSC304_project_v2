@@ -72,12 +72,13 @@ public class UI extends JFrame implements ActionListener{
     private JTable deleteReservationTable;
     private JTextField reservationID;
     private JTextField roomNo;
-    private JTextField customerID;
-    private JTextField hotelID;
-    private JTextField invoiceNo;
-    private JTextField eventID;
-    private JTextField facilityID;
+    private JComboBox customerID;
+    private JComboBox hotelID;
+    private JComboBox invoiceNo;
+    private JComboBox eventID;
+    private JComboBox facilityID;
     private JTable insertReservationTable;
+    private JTable updateHotelTable;
 
 
     private ReservationDelegate delegate = null;
@@ -87,7 +88,9 @@ public class UI extends JFrame implements ActionListener{
     private JTextField checkOutDate;
     private JTextField checkInDate;
     private JTextField reservationDate;
-
+    private JTextField hotelid;
+    private JTextField hotelName;
+    private JTextField newHotelName;
 
 
     public UI(ReservationDelegate delegate){
@@ -224,6 +227,7 @@ public class UI extends JFrame implements ActionListener{
         paymentTable.setModel(delegate.getDefaultTable("SELECT * FROM","PAYMENT"));
         deleteReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
+        updateHotelTable.setModel(delegate.getDefaultTable("SELECT * FROM","Hotel"));
     }
 
     @Override
@@ -255,7 +259,12 @@ public class UI extends JFrame implements ActionListener{
             insertReservationTable.setModel(delegate.getDefaultTable("SELECT * FROM","RESERVATION"));
         }
         if(e.getSource() == updateHotelButton){
-          //  delegate.updateHotel();
+            int ID = Integer.valueOf(hotelid.getText());
+            String name = String.valueOf(hotelName.getText());
+            String newName = String.valueOf(newHotelName.getText());
+            delegate.updateHotel(ID,name,newName);
+            updateHotelTable.setModel(delegate.getDefaultTable("SELECT * FROM", "HOTEL"));
+            hotelTable.setModel(delegate.getDefaultTable("SELECT * FROM", "HOTEL"));
         }
         if(e.getSource() == joinButton){
             joinTable.setModel(delegate.joinMailsofCustomersMoreThanOneWeek());
